@@ -1,12 +1,13 @@
-import Login from "./login";
+import Login from "./Login/login";
+import Todo from "./todo/Todo";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/login"} element={<Login />}></Route>
+        <Route path={"/"} element={<Login />}></Route>
+        <Route path={"/todo"} element={<Todo />}></Route>
       </Routes>
-      <Login />
     </BrowserRouter>
   );
 }
