@@ -28,7 +28,7 @@ export default function Todo() {
           console.log(err);
         });
     }
-  }, []);
+  }, [navigate]);
 
   const onChange = (e) => {
     setTodoItem(e.target.value);
@@ -49,7 +49,6 @@ export default function Todo() {
       )
       .then((res) => {
         setTodoList([...todoList, res.data]);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

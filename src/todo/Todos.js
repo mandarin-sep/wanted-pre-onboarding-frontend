@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { MdDeleteForever, MdEdit, MdClose, MdDone } from "react-icons/md";
+import { MdDeleteForever, MdEdit, MdClose } from "react-icons/md";
 
 const Todos = ({ todoObj, token }) => {
   const [editing, setEditing] = useState(false);
   const [editingText, setEditingText] = useState(todoObj.todo);
+  const [isDone, setIsDone] = useState(todoObj.isCompleted);
 
   const onDeleteClick = () => {
     axios
       .delete(
-        `https://pre-onboarding-selection-task.shop/todos/:${todoObj.id}`,
+        `https://pre-onboarding-selection-task.shop/todos/${todoObj.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -30,7 +31,7 @@ const Todos = ({ todoObj, token }) => {
     e.preventDefault();
     axios
       .put(
-        `https://pre-onboarding-selection-task.shop/todos/:${todoObj.id}`,
+        `https://pre-onboarding-selection-task.shop/todos/${todoObj.id}`,
         {
           todo: editingText,
           isCompleted: todoObj.isCompleted,
@@ -44,6 +45,7 @@ const Todos = ({ todoObj, token }) => {
       )
       .then((res) => {
         console.log(res);
+        setEditing(false);
       })
       .catch((err) => {
         console.log(err);
@@ -51,16 +53,13 @@ const Todos = ({ todoObj, token }) => {
   };
 
   const onChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setEditingText(value);
+    setEditingText(e.target.value);
   };
 
   const checkHandler = () => {
     axios
       .put(
-        `https://pre-onboarding-selection-task.shop/todos/:${todoObj.id}`,
+        `https://pre-onboarding-selection-task.shop/todos/${todoObj.id}`,
         {
           todo: editingText,
           isCompleted: !todoObj.isCompleted,
@@ -72,8 +71,8 @@ const Todos = ({ todoObj, token }) => {
           },
         }
       )
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        setIsDone(!isDone);
       })
       .catch((err) => {
         console.log(err);
@@ -99,12 +98,10 @@ const Todos = ({ todoObj, token }) => {
         </>
       ) : (
         <>
-          <input
-            type="checkbox"
-            checked={todoObj.isCompleted}
-            onChange={checkHandler}
-          />
-          <div>{todoObj.todo}</div>
+          <input type="checkbox" checked={isDone} onChange={checkHandler} />
+          <div style={isDone ? { textDecoration: "line-through" } : {}}>
+            {todoObj.todo}
+          </div>
           <ItemBtn>
             <button onClick={onDeleteClick}>
               <MdDeleteForever />
