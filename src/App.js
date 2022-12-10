@@ -1,12 +1,12 @@
 import Login from "./Login/login";
-import Todo from "./todo/Todo";
+import TodoInput from "./todo/TodoInput";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Login />}></Route>
-        <Route path={"/todo"} element={<Todo />}></Route>
+        <Route path={"/todo"} element={<TodoInput />}></Route>
       </Routes>
     </BrowserRouter>
   );

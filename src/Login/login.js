@@ -40,11 +40,15 @@ export default function Login() {
 
     if (newAccount) {
       axios
-        .post("http://localhost:8000/auth/signup", JSON.stringify(data), {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .post(
+          "https://pre-onboarding-selection-task.shop/auth/signup",
+          JSON.stringify(data),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
           navigate("/todo");
@@ -58,11 +62,15 @@ export default function Login() {
         });
     } else {
       axios
-        .post("http://localhost:8000/auth/signin", JSON.stringify(data), {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .post(
+          "https://pre-onboarding-selection-task.shop/auth/signin",
+          JSON.stringify(data),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((res) => {
           localStorage.setItem("access_token", res.data.access_token);
           navigate("/todo");
